@@ -1,0 +1,24 @@
+---
+version: "3.9"
+
+services:
+
+  api:
+    build:
+      context: .
+    container_name: api
+
+    ports:
+      - "8080:8080"
+      -
+    depends_on:
+      redis:
+        condition: service_started
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - ./data/cache:/data
+...
